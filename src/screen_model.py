@@ -49,6 +49,20 @@ def is_available() -> bool:
     return _get_pipe() is not None
 
 
+def status() -> str:
+    """
+    모델 로드를 '유발하지 않고' 현재 상태만 보고한다(사이드바 배지용).
+      'model'   : 모델이 이미 로드됨
+      'rules'   : 로드 시도 실패 → 규칙 폴백 중
+      'unknown' : 아직 로드 시도 전(첫 분류 때 결정됨)
+    """
+    if _pipe is not None:
+        return "model"
+    if _load_failed:
+        return "rules"
+    return "unknown"
+
+
 def model_screen(text: str, threshold: float = 0.5) -> Optional[bool]:
     """
     사전학습 UnSmile로 '악플 후보' 여부 판단.

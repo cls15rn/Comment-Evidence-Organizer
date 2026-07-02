@@ -34,4 +34,15 @@ pages = [
     st.Page("page_main.py",   title="지목 · 봉인",   icon="🛡️", default=True),
     st.Page("page_report.py", title="정리 · 리포트", icon="🗂️"),
 ]
-st.navigation(pages).run()
+nav = st.navigation(pages)
+
+# 사이드바: 현재 분류 엔진 표시 (모델 로드를 유발하지 않고 상태만 읽음)
+from screen_model import status as _screen_status
+_ENGINE_LABEL = {
+    "model":   "🟢 UnSmile 모델",
+    "rules":   "🟡 규칙(폴백)",
+    "unknown": "⚪ 첫 분류 시 결정",
+}
+st.sidebar.caption(f"분류 엔진: {_ENGINE_LABEL[_screen_status()]}")
+
+nav.run()
