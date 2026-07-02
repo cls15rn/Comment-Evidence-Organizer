@@ -60,6 +60,11 @@ def _try_pytesseract(image_bytes: bytes, langs: list[str]) -> Optional[OCRResult
         from PIL import Image
         import io
         import os
+        # 윈도우 등에서 tesseract 실행파일이 PATH에 없을 때, 경로를 환경변수로 지정 가능.
+        #   예) set TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+        cmd = os.environ.get("TESSERACT_CMD")
+        if cmd:
+            pytesseract.pytesseract.tesseract_cmd = cmd
         lang = "+".join("kor" if l == "ko" else "eng" if l == "en" else l for l in langs)
         # 댓글 캡처는 '한 덩어리 텍스트'에 가까움 → psm 6(단일 블록)이 레이아웃 오해를 크게 줄인다.
         # 그레이스케일 변환도 한글 인식률을 올린다.
