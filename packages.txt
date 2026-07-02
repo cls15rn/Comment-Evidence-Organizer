@@ -1,0 +1,4 @@
+# Streamlit Community Cloud가 빌드 시 apt로 설치하는 시스템 패키지.
+# tesseract 본체 + 한국어 데이터 (배포에서 가볍고 빠른 OCR 경로)
+tesseract-ocr
+tesseract-ocr-kor

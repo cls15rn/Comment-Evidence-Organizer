@@ -1,0 +1,22 @@
+# 실제 사용 패키지. 버전은 배포 직전 핀 고정 예정(현재는 최신 허용).
+
+# --- 앱·데이터 (확정) ---
+streamlit          # 데모 UI
+pandas             # 증거표(CSV) 가공
+
+# --- OCR ---
+Pillow             # 이미지 로드 (OCR 어댑터 공통 의존)
+pytesseract        # 배포 기본 엔진(가벼움·빠름). 시스템 tesseract는 packages.txt로 설치
+#   ↑ 배포(Streamlit Cloud)는 이걸로. packages.txt 에 tesseract-ocr / tesseract-ocr-kor 필요.
+# easyocr          # 로컬 테스트용(한국어 정확도↑). pip만으로 설치되나 무겁고 첫 실행 느림.
+#   ↑ 로컬에서 정확도 보고 싶을 때만 주석 해제. ocr.py가 있으면 자동으로 우선 사용.
+# (엔진 없으면 스텁으로 떨어지지만, 이 도구는 '자동 추출'이 원칙이라 배포엔 tesseract 필수)
+
+# --- PDF (제출용 증거표) ---
+reportlab          # 내장 한국어 CID 폰트로 PDF 생성(외부 폰트 파일 불필요). 없으면 HTML 폴백
+
+# --- 봉인 ---
+# hashlib·json 은 표준 라이브러리 → 별도 의존성 없음
+
+# --- 분류(④) 모델 ---
+# 로컬/오픈소스 vs 외부 API 미결(비용 제약). 결정 시 여기에 추가. — TODO
