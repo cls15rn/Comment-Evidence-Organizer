@@ -37,12 +37,16 @@ pages = [
 nav = st.navigation(pages)
 
 # 사이드바: 현재 분류 엔진 표시 (모델 로드를 유발하지 않고 상태만 읽음)
-from screen_model import status as _screen_status
+try:
+    from screen_model import status as _screen_status
+    _state = _screen_status()
+except Exception:
+    _state = "unknown"         # screen_model 없거나 깨져도 앱은 계속 동작
 _ENGINE_LABEL = {
     "model":   "🟢 UnSmile 모델",
     "rules":   "🟡 규칙(폴백)",
     "unknown": "⚪ 첫 분류 시 결정",
 }
-st.sidebar.caption(f"분류 엔진: {_ENGINE_LABEL[_screen_status()]}")
+st.sidebar.caption(f"분류 엔진: {_ENGINE_LABEL.get(_state, '⚪ 미상')}")
 
 nav.run()

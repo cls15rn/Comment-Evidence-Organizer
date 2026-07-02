@@ -28,9 +28,12 @@ from schema import (
 #   사전학습 UnSmile 모델을 우선 사용, 없으면(미설치·네트워크·자원 부족) 규칙 스텁으로 폴백.
 # ─────────────────────────────────────────────────────────────
 def screen(text: str) -> bool:
-    """악플 후보인지 1차로 거른다. 모델 있으면 모델, 없으면 규칙."""
-    from screen_model import model_screen
-    m = model_screen(text)
+    """악플 후보인지 1차로 거른다. 모델 있으면 모델, 없으면(미설치·파일없음 등) 규칙."""
+    try:
+        from screen_model import model_screen
+        m = model_screen(text)
+    except Exception:
+        m = None               # screen_model 자체가 없거나 깨져도 앱은 안 죽고 규칙으로
     if m is not None:          # 모델이 판단함
         return m
     # 폴백: 규칙 스텁 (사전·마커)

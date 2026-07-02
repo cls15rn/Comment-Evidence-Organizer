@@ -19,7 +19,7 @@ reportlab          # 내장 한국어 CID 폰트로 PDF 생성(외부 폰트 파
 # hashlib·json 은 표준 라이브러리 → 별도 의존성 없음
 
 # --- 분류(④) 모델 — 사전학습 UnSmile (선택) ---
- transformers   # smilegate-ai/kor_unsmile 사전학습 모델로 screen() 1차 거름
- torch          # transformers 백엔드. 무거움(+모델 436MB) → 무료 배포 자원 주의(OOM 가능)
+# transformers   # smilegate-ai/kor_unsmile 사전학습 모델로 screen() 1차 거름
+# torch          # transformers 백엔드. 무거움(+모델 436MB) → 무료 배포 자원 주의(OOM 가능)
 #   ↑ 로컬/정확도용 권장. 미설치·로드 실패 시 screen()이 규칙 스텁으로 자동 폴백.
 #   ↑ 모델 파일은 저장소에 넣지 않고 실행 시 HF에서 로드만 함(CC-BY-NC-ND: 재배포 아님).
