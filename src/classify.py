@@ -25,9 +25,15 @@ from schema import (
 
 # ─────────────────────────────────────────────────────────────
 # [MODEL] 작은/로컬 모델 자리 — 1차 거름
+#   사전학습 UnSmile 모델을 우선 사용, 없으면(미설치·네트워크·자원 부족) 규칙 스텁으로 폴백.
 # ─────────────────────────────────────────────────────────────
 def screen(text: str) -> bool:
-    """악플 후보인지 싸게 판단하는 게이트. 지금은 규칙 더미 → 작은 모델로 교체."""
+    """악플 후보인지 1차로 거른다. 모델 있으면 모델, 없으면 규칙."""
+    from screen_model import model_screen
+    m = model_screen(text)
+    if m is not None:          # 모델이 판단함
+        return m
+    # 폴백: 규칙 스텁 (사전·마커)
     return _has_any(text, _DEROGATORY_LEXICON) or _looks_targeted(text)
 
 
