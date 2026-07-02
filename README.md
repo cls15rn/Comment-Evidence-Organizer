@@ -33,7 +33,7 @@
 
 ## 데모 (Demo)
 
-**라이브 데모:** https://comment-evidence-organizer-syh1109.streamlit.app/
+**라이브 데모:** [https://comment-evidence-organizer-syh1109.streamlit.app/](https://comment-evidence-organizer-sample-project.streamlit.app/)
 
 > 아래 화면은 모두 **더미(가상) 데이터**로 시연한 것입니다. 실제 인물·사건과 무관합니다.
 
