@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="1014" viewBox="0 0 680 1014" role="img">
 <title>악플 증거 정리 도구 통합 설계도 (대비 도구)</title>
-<desc>평소 대비 도구로 재포지셔닝. 사용자 지목을 입력으로 보존·분류·정리를 자동화하고, 봉인 후 기본 비노출로 2차 노출을 줄인다. 컨테이너는 실선, 설계 확장만 점선.</desc>
+<desc>평소 대비 도구로 재포지셔닝. 사용자 지목을 입력으로 보존·분류·정리를 자동화하고, 봉인 후 기본 비노출로 2차 노출을 줄인다. 데모 입력은 캡처 업로드, 설계 확장으로 공유 시트(사용자가 공유=지목, 네이티브 필요)를 둔다. 컨테이너는 실선, 설계 확장만 점선.</desc>
 <style>
   text{font-family:"Noto Sans CJK KR","Noto Sans KR",sans-serif}
   .ts{font-size:12px}
@@ -21,7 +21,11 @@
 
 <rect x="170" y="128" width="340" height="60" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
 <text class="th" x="340" y="149" text-anchor="middle" dominant-baseline="central" fill="#2C2C2A">입력 — 사용자 지목 (사람)</text>
-<text class="ts" x="340" y="170" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">캡처로 지목 · 자동수집(사찰화) 배제</text>
+<text class="ts" x="340" y="170" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">캡처 업로드로 지목 · 자동수집(사찰화) 배제</text>
+<rect x="524" y="128" width="116" height="60" rx="10" fill="none" stroke="#854F0B" stroke-width="1" stroke-dasharray="6 4"/>
+<text class="th" x="582" y="150" text-anchor="middle" dominant-baseline="central" fill="#854F0B">공유 시트</text>
+<text class="ts" x="582" y="170" text-anchor="middle" dominant-baseline="central" fill="#73726c">확장 · 네이티브</text>
+<line x1="524" y1="158" x2="512" y2="158" stroke="#854F0B" stroke-width="1" stroke-dasharray="5 4" marker-end="url(#arrow)"/>
 <line x1="340" y1="190" x2="340" y2="212" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
 
 <rect x="40" y="214" width="600" height="170" rx="16" fill="none" stroke="#D3D1C7" stroke-width="0.75"/>
