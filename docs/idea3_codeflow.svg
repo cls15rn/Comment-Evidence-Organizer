@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="792" viewBox="0 0 680 792" role="img">
+<title>악플 증거 정리 도구 — 실행 흐름 (파일·함수)</title>
+<desc>사용자 입력이 어느 파일의 어느 함수로 흐르는지 보여주는 실행 흐름도. 색은 파일별. 캡처 업로드 → OCR → SHA-256 봉인 → 분류(모델/규칙) → 세션 저장 → 세 가지 뷰 출력.</desc>
+<style>
+  text{font-family:"Noto Sans CJK KR","Noto Sans KR",sans-serif}
+  .ts{font-size:12px}
+  .th{font-size:14px;font-weight:500}
+  .mono{font-family:"DejaVu Sans Mono","Noto Sans CJK KR","Noto Sans KR",monospace;font-size:11.5px}
+</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#73726c" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<rect x="0" y="0" width="680" height="792" fill="#ffffff"/>
+
+<!-- 제목 -->
+<rect x="40" y="24" width="600" height="58" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="340" y="46" text-anchor="middle" dominant-baseline="central" fill="#3C3489">실행 흐름 — 입력이 어느 파일 · 함수로 흐르는가</text>
+<text class="ts" x="340" y="66" text-anchor="middle" dominant-baseline="central" fill="#534AB7">색 = 파일별 / mono = 실제 호출되는 함수</text>
+
+<!-- ① 입력 (page_main) -->
+<rect x="40" y="98" width="600" height="56" rx="10" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text class="th" x="60" y="119" dominant-baseline="central" fill="#2C2C2A">① 입력 — 사용자가 캡처 이미지 업로드</text>
+<text class="mono" x="60" y="139" dominant-baseline="central" fill="#5F5E5A">app/app.py  →  app/page_main.py</text>
+<line x1="340" y1="156" x2="340" y2="176" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ② OCR (ocr.py) -->
+<rect x="40" y="178" width="600" height="60" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="th" x="60" y="199" dominant-baseline="central" fill="#085041">② OCR 추출 → 초안 (사용자 교정)</text>
+<text class="mono" x="60" y="220" dominant-baseline="central" fill="#0F6E56">ocr.extract_text()  ·  ocr.strip_boilerplate()   [easyocr / pytesseract / stub]</text>
+<line x1="340" y1="240" x2="340" y2="260" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ③ 봉인 (ocr→seal) -->
+<rect x="40" y="262" width="600" height="74" rx="10" fill="#E4F0DA" stroke="#3E6B22" stroke-width="0.5"/>
+<text class="th" x="60" y="283" dominant-baseline="central" fill="#2E5417">③ 봉인 — SHA-256 무결성 (봉인 버튼)</text>
+<text class="mono" x="60" y="304" dominant-baseline="central" fill="#3E6B22">ocr.review_then_seal() → seal.seal_record() → seal.compute_seal()</text>
+<text class="mono" x="60" y="322" dominant-baseline="central" fill="#3E6B22">                                          → sha256_bytes() / sha256_text()</text>
+<line x1="340" y1="336" x2="340" y2="356" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ④ 분류 (classify + screen_model) -->
+<rect x="40" y="358" width="600" height="112" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="th" x="60" y="379" dominant-baseline="central" fill="#3C3489">④ 분류 — 판정 아님(형식적 특징 관찰 + 면책)</text>
+<text class="mono" x="60" y="402" dominant-baseline="central" fill="#534AB7">classify.classify()</text>
+<text class="mono" x="76" y="422" dominant-baseline="central" fill="#534AB7">├─ screen() → screen_model.model_screen()</text>
+<text class="ts" x="392" y="422" dominant-baseline="central" fill="#6b64c4">UnSmile 모델 · 없으면 규칙 폴백</text>
+<text class="mono" x="76" y="440" dominant-baseline="central" fill="#534AB7">├─ observe_features()</text>
+<text class="ts" x="250" y="440" dominant-baseline="central" fill="#6b64c4">형식적 특징 관찰</text>
+<text class="mono" x="76" y="458" dominant-baseline="central" fill="#534AB7">└─ map_provisions()</text>
+<text class="ts" x="250" y="458" dominant-baseline="central" fill="#6b64c4">조항 유형 연결 + 면책</text>
+<line x1="340" y1="470" x2="340" y2="490" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ⑤ 저장 (schema/session) -->
+<rect x="40" y="492" width="600" height="60" rx="10" fill="#FBF3E6" stroke="#8A6D3B" stroke-width="0.5"/>
+<text class="th" x="60" y="513" dominant-baseline="central" fill="#6b5326">⑤ 저장 — 세션 메모리 (임시, 새로고침 시 소멸)</text>
+<text class="mono" x="60" y="534" dominant-baseline="central" fill="#8A6D3B">records.append(rec)  →  st.session_state.records   [schema.EvidenceRecord]</text>
+
+<!-- 구분: 정리·리포트 -->
+<line x1="40" y1="576" x2="640" y2="576" stroke="#D3D1C7" stroke-width="1" stroke-dasharray="4 4"/>
+<text class="ts" x="340" y="592" text-anchor="middle" dominant-baseline="central" fill="#73726c">정리 · 리포트 페이지 — st.session_state.records 를 읽어 렌더 (app/page_report.py)</text>
+<line x1="340" y1="604" x2="340" y2="624" stroke="#73726c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<!-- ⑥ 세 뷰 (views.py) -->
+<rect x="40" y="626" width="600" height="86" rx="10" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+<text class="th" x="60" y="647" dominant-baseline="central" fill="#712B13">⑥ 세 가지 뷰 출력 — 한 데이터, 세 렌즈</text>
+<text class="mono" x="60" y="668" dominant-baseline="central" fill="#993C1D">views.to_csv()  ·  views.to_timeline()  ·  views.to_charges()</text>
+<text class="mono" x="60" y="688" dominant-baseline="central" fill="#993C1D">views.to_pdf()   [reportlab Korean PDF · else to_html()]</text>
+
+<!-- 하단 주석 -->
+<text class="ts" x="40" y="738" dominant-baseline="central" fill="#73726c">데이터 척추: schema.EvidenceRecord 한 객체가 ②~⑥을 관통(필드가 채워지며 흐름).</text>
+<text class="ts" x="40" y="758" dominant-baseline="central" fill="#73726c">비용 구조: ④ screen()이 먼저 거르고, 무거운 근거 생성은 통과분만 — 도달량 억제.</text>
+</svg>
